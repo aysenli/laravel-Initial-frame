@@ -13,9 +13,22 @@ return [
 	'about'		=>	'关于',
 	'account_management' => '账号管理',
 	'edit'	=>	'编辑',
+	'delete' => '删除',
+	'view'	=>	'查看',
 	'n_messages' => ':number 条信息',
 	'system_setting' =>'系统设置',
 	'admin_lock'	=>	'锁定',
 	'subscribe'	=>	'网站订阅查看',
-	'copyright_statement'	=>	'版权声明'
+	'copyright_statement'	=>	'版权声明',
+	'search'	=>	'搜 索',
+	'sel_all'	=>	'全选',
+	'sel_delete'=> '批量删除',
+	'choice'	=>	'选择',
+	'created_at'	=>	'创建时间',
+	'updated_at'	=>	'更新时间',
+	'operate'	=>	'操作',
+	'description'	=>	'描述',
+	'required'	=>	'必填',
+	'submit'	=> '提 交',
+	'basic_information'=>'基本信息'
 ];

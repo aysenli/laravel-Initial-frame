@@ -23,8 +23,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function()
 	Route::get('/index/main' , ['as'=>'login_user','uses'=>'IndexController@main']);
 	//
 	#权限管理
-	Route::group(['prefix'=>'rabc' , 'namespace'=>'RACB' ,  'middleware'=>'authLogin'] , function(){
-
+	Route::group(['prefix'=>'rbac' , 'namespace'=>'Rbac' ,  'middleware'=>'authLogin'] , function(){
+		Route::resource('roles' , 'RolesController');
 	});
 	#公共
 	Route::group(['prefix'=>'common' , 'namespace'=>'Common'] , function(){

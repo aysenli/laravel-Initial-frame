@@ -46,4 +46,22 @@ class Navigation extends Model
     	return $navigationData;
     }
 
+    /**
+     * 获取导航的无限分类
+     * @return [type] [description]
+     */
+    public function getAllNavigationForChildren($pid = 0)
+	{
+		$allForChildren = array();
+		$navigationRows = $this->select('id','name','pid')->orderBy('pid' , 'asc')->where('pid',$pid)->get();
+		if($navigationRows){
+			foreach ($navigationRows as $key => $value) {		
+				$value->children = $this->getAllNavigationForChildren($value['id']);
+				$allForChildren[$value['id']]	=	$value;	
+			}	
+		}			
+
+		return $allForChildren;
+	}
+
 }

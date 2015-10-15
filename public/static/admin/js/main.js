@@ -21,5 +21,10 @@ $(function(){
 	});
 
 
+	$("[type='checkbox'][data-pid]").bind('click' , function(){
+		var pid = $(this).data('pid');
+		$("[type='checkbox'][data-id='"+pid+"']").trigger("click");
+	});
+
 })
 

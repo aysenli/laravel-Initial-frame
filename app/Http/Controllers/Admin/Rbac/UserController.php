@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin\Rbac;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\AdminController;
 
-class UserController.php extends Controller
+class UserController extends AdminController
 {
     /**
      * Display a listing of the resource.

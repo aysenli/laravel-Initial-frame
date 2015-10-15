@@ -25,10 +25,6 @@ class LeftController extends Controller
      */
     public function getIndex(Request $request , Navigation $navigation)
     {   
-        // foreach ($request->user()->getRoles() as $key => $value) {
-        //    echo ($value->id) ; 
-        // }
-        // var_dump( $request->user()->getRoles() );
         $navigations = $navigation->getUserNavigationForId($request->user() , $request->input('id' , 1) , 2);
         return view('admin.common.left'  , compact('navigations'));
     }

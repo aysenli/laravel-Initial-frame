@@ -19,4 +19,13 @@ return [
 	'password_max'	=>	'密码最多20个字符',
 	'login_success' => '登陆成功',
 	'login_not_success'	=>	'登陆不成功',
+
+	'not_empty'	=>	':name不能为空',
+	'max_length'	=>	':name长度不能超过:count个字符',
+	'alpha_dash'	=>	':name仅允许字母、数字、破折号（-）以及底线（_）',
+	'min_length'	=>	':name长度不能小于:count个字符',
+	'unique'		=>	':name已存在',
+	'array'			=>	':name值不正确'
+
+
 ];

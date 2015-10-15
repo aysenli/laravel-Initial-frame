@@ -1,0 +1,9 @@
+INSERT INTO `permissions` 
+(`name`, `display_name`, `description`) 
+VALUES 
+('admin.rbac.roles.create', '角色创建', '创建角色页面'),
+('admin.rbac.roles.store', '角色创建', '提交创建角色'),
+('admin.rbac.roles.show', '查看角色', '查看角色&修改角色'),
+('admin.rbac.roles.edit', '修改角色', '修改角色'),
+('admin.rbac.roles.update', '修改角色', '提交修改角色'),
+('admin.rbac.roles.destroy', '删除角色', '删除角色')
