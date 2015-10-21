@@ -29,6 +29,6 @@ class IndexController extends Controller
     public function main()
     {
         return view('admin.common.main');
-    }
+    }    
     
 }

@@ -15,7 +15,7 @@
 <div class="main">
   <div class="title"></div>
   <div class="login">
-    <form action="{{ url('/admin/common/login/') }}" method="post" name="cms" rel="submit">
+    <form action="{{ url('/admin/common/login/') }}" method="post" name="cms" rel="loginsubmit">
       <div class="inputbox">
         <dl>
           <dd>{{ trans('auth.user_name') }}:</dd>
@@ -53,10 +53,10 @@
 <script type="text/javascript" src="/static/admin/js/jquery.preloader.js"></script>
 <script type="text/javascript" src="/static/admin/js/jquery.submit.js"></script>
 <script type="text/javascript" src="/static/admin/js/jquery.popstatus.js"></script>
-<script type="text/javascript" src="/static/admin/js/global.js"></script>  
+<script type="text/javascript" src="/static/admin/js/main.js"></script>  
 <script type="text/javascript">
 function ajaxSuccess(json , xhrstatus , exception)
-{
+{console.log(json);
   if(xhrstatus == 'success'){
     if(json.status == 0 || !json){
       $.popstatus(4, json.message,true);
@@ -79,7 +79,7 @@ function ajaxSuccess(json , xhrstatus , exception)
 
 
 
-$("[rel='submit']").ajaxsubmit({
+$("[rel='loginsubmit']").ajaxsubmit({
   success:ajaxSuccess
 });
 

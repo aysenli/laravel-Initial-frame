@@ -30,5 +30,7 @@ return [
 	'description'	=>	'描述',
 	'required'	=>	'必填',
 	'submit'	=> '提 交',
-	'basic_information'=>'基本信息'
+	'basic_information'=>'基本信息',
+	'fail' => '失败',
+	'success'=>'成功'
 ];

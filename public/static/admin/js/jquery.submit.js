@@ -4,7 +4,8 @@
 */
 $.fn.extend({
 	ajaxsubmit:function(options){		
-	// alert($(this).serialize());   		
+	// alert($(this).serialize());
+		// console.log(this);   		
 		this.each(function() {
 			$this 	=	$(this);
 			var settings = $this.data('ajaxsubmit'); 
@@ -29,7 +30,7 @@ $.fn.extend({
 			}
 
 
-			$this.on('submit', function(event) {
+			$this.bind('submit', function(event) {
 				event.preventDefault();
 				/* Act on the event */	
 				var submitData = $(this).serialize();					

@@ -21,6 +21,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function()
 	// Route::get('/' , 'IndexController@index');
 	Route::get('/' , ['as'=>'login_user','uses'=>'IndexController@index']);
 	Route::get('/index/main' , ['as'=>'login_user','uses'=>'IndexController@main']);
+	Route::get('/alert',function(){		
+		return view('admin.common.alert')->with(Session::all());
+	});
 	//
 	#权限管理
 	Route::group(['prefix'=>'rbac' , 'namespace'=>'Rbac' ,  'middleware'=>'authLogin'] , function(){

@@ -66,11 +66,11 @@ $.extend({
 		//是否使用遮照
 		if (bremove) {
 			$('body').append('<div id="bremove" />');
-			$("body #bremove").on('click', function(event) {
+			$("body #bremove").bind('click', function(event) {
 				wsremove();
 			});
 		}else{
-			$('body #wstatus').on('click',  function(event) {
+			$('body #wstatus').bind('click',  function(event) {
 				wsremove();
 			});
 		}	

@@ -31,9 +31,7 @@ class RolesController extends AdminController
      * @return \Illuminate\Http\Response
      */
     public function create(Permission $permission , Navigation $navigation)
-    {           
-        // print_r(Session::all());
-        // print_r($navigation->getAllNavigationForChildren());
+    {         
         return view('admin.rbac.create')->with('navigationRows' , $navigation->getAllNavigationForChildren())
                 ->with('permissionRows' , $permission->getAllPermissionForChildren());
     }
@@ -44,10 +42,24 @@ class RolesController extends AdminController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request , CreateRolesRequest $rolesRequest)
+    public function store(CreateRolesRequest $rolesRequest)
     {
         $inputs = $rolesRequest->all();
-        
+        $roleModel = new Role();
+        $result = $roleModel->submitForCreate($inputs);
+        $alert = [];
+        if($result['status']){
+            $alert = [
+            'type'=>'success',
+            'data'=>[trans('rbac.add_roles').trans('common.success')]
+            ];
+        }else{
+            $alert = [
+            'type'=>'warning',
+            'data'=>[$result['error']]
+            ];
+        }
+        // redirect('admin/alert').with($alert);
     }
 
     /**
