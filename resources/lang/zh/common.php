@@ -32,5 +32,6 @@ return [
 	'submit'	=> '提 交',
 	'basic_information'=>'基本信息',
 	'fail' => '失败',
-	'success'=>'成功'
+	'success'=>'成功',
+	'list'=>'列表'
 ];

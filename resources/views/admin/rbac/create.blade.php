@@ -13,7 +13,7 @@
 
 <div class="content_box">
 	<div class="content form_content">
-		<form method="post" action="{{ route('admin.rbac.roles.store') }}" rel="submit">
+		<form method="post" action="{{ route('admin.rbac.roles.store') }}" rel="preloader">
 			<table class="form_table" cellpadding="0" cellspacing="0" id="tab-1">
 				<colgroup>
 					<col width="150px" />

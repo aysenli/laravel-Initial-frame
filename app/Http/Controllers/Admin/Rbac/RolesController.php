@@ -48,18 +48,22 @@ class RolesController extends AdminController
         $roleModel = new Role();
         $result = $roleModel->submitForCreate($inputs);
         $alert = [];
+        $location = ['href'=>route('admin.rbac.roles.index'),'name'=>trans('rbac.role').trans('common.list')];
         if($result['status']){
             $alert = [
             'type'=>'success',
-            'data'=>[trans('rbac.add_roles').trans('common.success')]
+            'data'=>[trans('rbac.add_roles').trans('common.success')],
+            'location'=>$location
             ];
         }else{
             $alert = [
             'type'=>'warning',
-            'data'=>[$result['error']]
+            'data'=>[$result['error']],
+            'location'=>$location
             ];
         }
-        // redirect('admin/alert').with($alert);
+        // return new JsonResponse($alert);
+        return view('admin.common.alert').with($alert);
     }
 
     /**

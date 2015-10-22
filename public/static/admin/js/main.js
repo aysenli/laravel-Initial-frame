@@ -29,22 +29,27 @@ $(function(){
 	});
 
 	
-	if(typeof $.fn.ajaxsubmit != 'undefined'){
-		$('[rel="submit"]').ajaxsubmit({success : function(json , xhrstatus , exception){
-			var errorMessage = '';
-			if(xhrstatus == 'success'){
 
-			}else{
-				console.log(json);
-			    for (var Things in json.response) {
-			      for (var i in json.response[Things]){
-			        errorMessage += json.response[Things][i];
-			      }
-			    }
-			    $.popstatus(4, errorMessage,true);
-			}
-		}});
-	}
+	$('[rel="preloader"]').bind('submit',function(){
+		var invalid = true;
+		for(var i = 0; i < this.elements.length; i++)
+        {
+        	var e = this.elements[i];
+        	if((e.type == "text" || e.type == "password" || e.type == "select-one" || e.type == "textarea") && e.getAttribute("pattern") && e.style.display!='none' && e.offsetWidth > 0)
+            {
+            	if (e.className.indexOf(" invalid-text")==-1)
+				{
+					invalid = false;
+				}
+            }
+        }
+			
+        if(invalid){
+        	$("#preloader").preloader('open');
+        }
+		// console.log(this.elements);	
+	});
+
 
 	
 
