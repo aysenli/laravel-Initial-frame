@@ -4,7 +4,7 @@
  */
 
 function confirmurl(url,message) {
-	window.top.art.dialog.confirm(message, function(){
+	art.dialog.confirm(message, function(){
     	redirect(url);
 	}, function(){
 	    return true;
@@ -43,7 +43,7 @@ function openwinx(url,name,w,h) {
 function submit_confirm(id,msg,w,h){
 	if(!w) w=250;
 	if(!h) h=100;
-	  window.top.art.dialog({
+	art.dialog({
       content:msg,
       lock:true,
       width:w,

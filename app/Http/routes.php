@@ -28,6 +28,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function()
 	#权限管理
 	Route::group(['prefix'=>'rbac' , 'namespace'=>'Rbac' ,  'middleware'=>'authLogin'] , function(){
 		Route::resource('roles' , 'RolesController');
+		Route::resource('permission' , 'PermissionController');
+		
 	});
 	#公共
 	Route::group(['prefix'=>'common' , 'namespace'=>'Common'] , function(){

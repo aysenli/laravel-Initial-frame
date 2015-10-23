@@ -23,16 +23,21 @@
 			<p>{{$element}}</p>
 		@endforeach
 		@endif
-		@if (isset($location))		
+		@if (isset($hrefs))		
 		<p>
-			@foreach ($location as $element)
+			@foreach ($hrefs as $element)
 			[<a href="{{$element['url']}}">{{$element['name']}}</a>]&nbsp;&nbsp;
 			@endforeach
+		</p>
 		@endif
 		<p>
 			<strong id="time">5</strong>
-			秒后自动跳转到
-			[<a href="javascript:history.back();">上一页</a>]
+			{{ trans('common.seconds_jump') }}
+			@if (isset($location))	
+			[<a href="{{$location['url']}}" id="autoLocation">{{$location['name']}}</a>]
+			@else	
+			[<a href="javascript:history.back();"  id="autoLocation">{{ trans('page.previous') }}</a>]
+			@endif
 		</p>
 	</div>
 </body>
@@ -44,7 +49,7 @@
 		time = time - 1;		
 		if(time == 0){
 			setTimeout(interval);
-			history.back();
+			location.href=$('#autoLocation').attr('href');
 		}
 		document.getElementById('time').innerHTML = time;
 	},1000);

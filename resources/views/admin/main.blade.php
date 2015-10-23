@@ -3,10 +3,12 @@
 <head>
 	<meta charset="UTF-8">
 	<title>{{ trans('common.common_title') }}</title>
+	<meta name="csrf-token" content="{{ csrf_token() }}" />
+
 	<link rel="stylesheet" type="text/css" href="/static/admin/css/admin_style.css" />
 	<link rel="stylesheet" type="text/css" href="/static/admin/css/admin_right.css" />
 	<link rel="stylesheet" type="text/css" href="/static/admin/style/public.css" />
-	<script src="/static/admin/js/jquery-1.4.4.min.js"></script>
+	<script src="/static/admin/js/jquery.min.js"></script>
 	<script src="/static/admin/js/artTemplate/artTemplate.js" type="text/javascript"></script>
 	<script src="/static/admin/js/artTemplate/artTemplate-plugin.js" type="text/javascript"></script>
 	<link rel="stylesheet" href="/static/admin/js/artdialog/skins/idialog.css" type="text/css" />
@@ -17,7 +19,7 @@
 	<link rel="stylesheet" type="text/css" href="/static/admin/js/validate/style.css">	
 	<script src="/static/admin/js/jquery.stonecms.js" type="text/javascript"></script>
 	<script src="/static/admin/js/jquery.checkbox.js" type="text/javascript"></script>
-	<script src="/static/admin/js/jquery.submit.js" type="text/javascript"></script>
+	<script src="/static/admin/js/function.js" type="text/javascript"></script>
 	<script type="text/javascript" src="/static/admin/js/jquery.popstatus.js"></script>
 	<script type="text/javascript" src="/static/admin/js/jquery.preloader.js"></script>
 	<script src="/static/admin/js/main.js"></script>

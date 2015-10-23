@@ -4,7 +4,7 @@
 @section('content')
 <div class="operating">
 	<div class="search f_r">
-		<form method="post" name="searchModForm">			
+		<form method="get" name="searchModForm">			
 			<input type="text" value="" name="search[keywords]" placeholder="{{ trans('rbac.role_display_name') }}" class="small">
 			<button type="submit" class="btn"><span class="sch">{{ trans('common.search') }}</span></button>
 		</form>
@@ -74,11 +74,8 @@
 					<td>{{ $page->description }}</td>
 					<td>{{ $page->created_at }}</td>
 					<td>{{ $page->updated_at }}</td>
-					<td>
-						<a title="{{ trans('common.view') }}{{ trans('rbas.role') }}" href="{{ route('admin.rbac.roles.show' , ['id'=>$page->id]) }}">
-							<img alt="{{ trans('common.view') }}" src="/static/admin/images/icon_check.gif" class="operator">
-						</a>	
-						<a title="{{ trans('common.delete') }}{{ trans('rbac.role') }}" href="{{ route('admin.rbac.roles.destroy' , ['id'=>$page->id]) }}">
+					<td>							
+						<a title="{{ trans('common.delete') }}{{ trans('rbac.role') }}" href="javascript:void(0);" data-msg="{{ trans('common.confirm_delete',['name'=>trans('rbac.role')]) }}" data-href="{{ route('admin.rbac.roles.destroy' , ['id'=>$page->id]) }}">
 							<img alt="{{ trans('common.delete') }}" src="/static/admin/images/icon_del.gif" class="operator">
 						</a>		
 						<a title="{{ trans('common.edit') }}{{ trans('rbas.role') }}" href="{{ route('admin.rbac.roles.edit' , ['id'=>$page->id]) }}">

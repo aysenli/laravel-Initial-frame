@@ -12,16 +12,17 @@ class Permission extends EntrustPermission
      */
 	public function getAllPermissionForChildren()
 	{
-		$allForChildren = array();
-		$permissionRows = $this->select('id','name','pid','display_name')->orderBy('pid' , 'asc')->get();
+		$allForChildren = [];
+		$permissionRows = $this->orderBy('pid' , 'asc')->get()->toArray();
 
 		foreach ($permissionRows as $key => $value) {
 			//最上级
 			if($value['pid'] == 0){
 				$allForChildren[$value['id']]	=	$value;
-			}else{
-				$children[$value['id']] = $value;
-				$allForChildren[$value['pid']]->children = $children;
+				// $children = [];
+			}else{				
+				// $children[$value['id']] = $value;
+				$allForChildren[$value['pid']]['children'][$value['id']] = $value;
 			}
 		}
 		return $allForChildren;

@@ -1,5 +1,11 @@
 
 $(function(){
+	$.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
 	//load隐藏
 	$("#preloader").preloader('close');
 	//table切换
@@ -25,7 +31,9 @@ $(function(){
 
 	//checkbox全选
 	$(".all_checkbox").click(function(){	
-		$(".item_checkbox").attr("checked" , true);		
+		$(".item_checkbox").each(function(){
+			$(this).attr("checked" , true);	
+		});			
 	});
 
 	
@@ -72,6 +80,29 @@ $(function(){
 	  $(this).css({borderColor:'#fc9938'});
 	});
 
+	$("[data-href]").bind('click',function(){
+		var href = $(this).data('href');
+		var msg = $(this).data('msg');
+		art.dialog.confirm(msg, function(){
+    		$.ajax({
+	            url: href, type:'DELETE',
+	            success: function (json) {
+	                if(json.type == 'success'){
+	                    location.reload();
+	                }else{
+	                	art.dialog({
+	      					content:json.data[0].message,
+	      				});	
+	                }
+	                               
+	            }
+	        });
+	        return false;
+		}, function(){
+		    return true;
+		});
+        
+	});
 
 })
 

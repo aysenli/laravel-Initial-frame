@@ -12,6 +12,7 @@ return [
 	'use_help'	=>	'使用帮助',
 	'about'		=>	'关于',
 	'account_management' => '账号管理',
+	'add' => '添加',
 	'edit'	=>	'编辑',
 	'delete' => '删除',
 	'view'	=>	'查看',
@@ -33,5 +34,8 @@ return [
 	'basic_information'=>'基本信息',
 	'fail' => '失败',
 	'success'=>'成功',
-	'list'=>'列表'
+	'list'=>'列表',
+	'seconds_jump'=>'秒后自动跳转到',
+	'page_404' => '页面不存在.',
+	'confirm_delete' => '确定该:name删除？'
 ];
