@@ -89,5 +89,5 @@
     </table>
   </form>
 </div>
-
+@include('admin.common.pages')
 @endsection
