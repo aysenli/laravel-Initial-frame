@@ -4,8 +4,8 @@
 @section('content')
 <div class="operating">
 	<div class="search f_r">
-		<form method="get" name="searchModForm">			
-			<input type="text" value="" name="search[keywords]" placeholder="{{ trans('rbac.role_display_name') }}" class="small">
+		<form method="get" name="searchModForm" action="{{route('admin.rbac.roles.index')}}">			
+			<input type="text" value="" name="keywords" placeholder="{{ trans('rbac.role_display_name') }}" class="small">
 			<button type="submit" class="btn"><span class="sch">{{ trans('common.search') }}</span></button>
 		</form>
 	</div>
@@ -88,6 +88,8 @@
 
 		</table>
 	</form>
+
 </div>
+@include('admin.common.page')
 
 @endsection

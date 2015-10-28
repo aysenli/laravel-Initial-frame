@@ -37,5 +37,8 @@ return [
 	'list'=>'列表',
 	'seconds_jump'=>'秒后自动跳转到',
 	'page_404' => '页面不存在.',
-	'confirm_delete' => '确定该:name删除？'
+	'confirm_delete' => '确定该:name删除？',
+	'belong_to'	=>	'所属',
+	'superior' => '最上级',
+	'email'	=>	'邮箱'
 ];

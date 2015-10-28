@@ -311,6 +311,8 @@ border:1px solid #ccc;
 vertical-align:middle;
 }
 
+div.alt-error{ height: 20px; line-height: 20px; color: #f33; }
+
 /*fileform*/
 .fileInputContainer{height:128px;position:relative;width: 128px;  behavior:url(js/pie.htc); cursor:pointer;}
 .fileInput{width:128px;height:128px;overflow: hidden;position:absolute;right:0;top:0;opacity: 0;filter:alpha(opacity=0);cursor:pointer;}

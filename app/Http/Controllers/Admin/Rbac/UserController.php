@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Admin\AdminController;
 
+use App\Models\Admin\Manage;
+
 class UserController extends AdminController
 {
     /**
@@ -15,7 +17,7 @@ class UserController extends AdminController
      */
     public function index()
     {
-        //
+        view('admin.rbac.user.index')->withPages(Manage::paginate(15));
     }
 
     /**

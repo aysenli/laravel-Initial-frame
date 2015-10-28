@@ -20,9 +20,15 @@ class RolesController extends AdminController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {        
-        return view('admin.rbac.roles.index')->withPages(Role::all()); 
+        $keywords = $request->input('keywords');
+        if($keywords){
+            return view('admin.rbac.roles.index')->withPages(Role::where('display_name' , $keywords)->paginate(15)); 
+        }else{
+            return view('admin.rbac.roles.index')->withPages(Role::paginate(15)); 
+        }
+        
     }
 
     /**

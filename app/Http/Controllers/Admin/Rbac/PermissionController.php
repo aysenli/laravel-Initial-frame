@@ -8,6 +8,9 @@ use App\Http\Controllers\Admin\AdminController;
 
 use App\Models\Admin\Permission;
 
+use App\Http\Requests\Admin\Rbac\CreatePermissionRequest;
+use App\Http\Requests\Admin\Rbac\UpdatePermissionRequest;
+use Session;
 class PermissionController extends AdminController
 {
     /**
@@ -17,7 +20,6 @@ class PermissionController extends AdminController
      */
     public function index(Permission $permissionModel)
     {
-        // print_r($permissionModel->getAllPermissionForChildren());die();
         return view('admin.rbac.permission.index')->with('permissionRows' , $permissionModel->getAllPermissionForChildren());
     }
 
@@ -26,9 +28,11 @@ class PermissionController extends AdminController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Permission $permissionModel)
     {
-        //
+        // print_r(Session::all());
+        return view('admin.rbac.permission.create')
+            ->with('permissionRows' , $permissionModel->where('pid',0)->get()->toArray());
     }
 
     /**
@@ -37,21 +41,38 @@ class PermissionController extends AdminController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Permission $permissionModel , CreatePermissionRequest $permissionRequest)
     {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $inputs = $permissionRequest->all();
+
+        $permissionID = $permissionModel->insertGetId([
+            'name'=>$inputs['name'] , 
+            'display_name'=>$inputs['display_name'] , 
+            'description'=>$inputs['description']
+        ]);
+
+        if($permissionID){
+            $hrefs = [
+                ['url'=>route('admin.rbac.permission.index') , 'name'=>trans('rbac.permission').trans('common.list')], 
+                ['url'=>route('admin.rbac.permission.edit' , ['id'=>$permissionID]) , 'name'=>trans('common.edit').trans('rbac.permission')]
+            ];
+            $alert = [
+                'type'=>'success',
+                'hrefs'=>$hrefs,
+                'location' => ['url'=>route('admin.rbac.permission.edit' , ['id'=>$permissionID]) ,'name'=>trans('common.edit').trans('rbac.permission')],
+                'data'  =>  trans('common.add').trans('rbac.permission').trans('common.success')
+            ];
+        }else{
+            $alert =  [
+                'type'=>'warning',
+                'data'=>trans('common.add').trans('rbac.permission').trans('common.fail'),
+                'location'=>['url'=>route('admin.rbac.permission.create') , 'name'=>trans('common.add').trans('rbac.permission')]
+            ];
+        }
+        return view('admin.common.alert',$alert);
     }
+   
 
     /**
      * Show the form for editing the specified resource.
@@ -59,9 +80,19 @@ class PermissionController extends AdminController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Permission $permissionModel, $id)
     {
-        //
+        $permissionRow = $permissionModel->find($id)->toArray();
+        if(!$permissionRow){
+            return view('admin.common.alert' , [
+                'type'=>'warning',
+                'data'=>trans('rbac.permission_not_exist'),
+                'location'=>['url'=>route('admin.rbac.permission.index') , 'name'=>trans('rbac.permission').trans('common.list')]
+            ]);
+        }
+        // print_r($permissionRow);die();
+        return view('admin.rbac.permission.create')->with('permissionRow' , $permissionRow)
+                ->with('permissionRows' , $permissionModel->where('pid',0)->get()->toArray());
     }
 
     /**
@@ -71,9 +102,48 @@ class PermissionController extends AdminController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePermissionRequest $permissionRequest , Permission $permissionModel , $id)
     {
-        //
+        $inputs = $permissionRequest->all();
+
+        $alert = [
+            'type'=>'warning',
+            'data'=>trans('common.edit').trans('rbac.fail'),
+            'hrefs'=>[
+                ['url'=>route('admin.rbac.permission.index') , 'name'=>trans('rbac.permission').trans('common.list')],
+                ['url'=>route('admin.rbac.permission.edit' , ['id'=>$id]) , 'name'=>trans('common.edit').trans('rbac.permission')]
+            ],
+            'location'=>[
+                'url' => route('admin.rbac.permission.edit' , ['id'=>$id]),
+                'name'=>trans('common.edit').trans('rbac.permission')
+            ]
+        ];
+
+        $isAble = $permissionModel->where('id', '<>', $id)->where('name', $inputs['name'])->count();
+        
+        if($isAble){
+            $alert['data'] = trans('common.unique' , ['name'=>trans('rbac.permission')]);
+
+            return view('admin.common.alert',$alert);
+        }
+     
+        $result  = $permissionModel->where('id', $id)->update([
+            'name'=>$inputs['name'],
+            'display_name' => $inputs['display_name'],
+            'description' => $inputs['description']
+        ]);
+
+        if(!$result){
+            $alert['data'] = trans('common.unique' , ['name'=>trans('rbac.permission')]);
+            // return view('admin.common.alert', $alert);
+        }else{
+            $alert['data'] = trans('common.edit').trans('common.success');
+            $alert['type'] = 'success';   
+        }
+        
+
+        return view('admin.common.alert' , $alert);
+
     }
 
     /**
@@ -82,8 +152,20 @@ class PermissionController extends AdminController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Permission $permissionModel , $id)
     {
-        //
+        $result = $permissionModel->find($id)->delete();
+
+        $alert = [
+            'type'=>'warning',
+            'data'=>[trans('common.delete').trans('common.fail')]
+        ];
+
+        if($result){            
+           $alert['type'] = 'success';
+           $alert['data'] = [trans('common.delete').trans('common.success')];
+        }
+
+        return response()->json($alert);
     }
 }

@@ -15,7 +15,6 @@
 <div class="field">
 	<table class="list_table">
 		<colgroup>
-			<col width="40px">
 			<col>
 			<col>
 			<col>
@@ -26,7 +25,6 @@
 
 		<thead>
 			<tr class="">
-				<th>{{ trans('common.choice') }}</th>
 				<th>{{ trans('rbac.permission_name') }}</th>
 				<th>{{ trans('rbac.permission_display_name') }}</th>
 				<th>{{ trans('common.description') }}</th>
@@ -38,11 +36,10 @@
 	</table>
 </div>
 
-<div class="content" style="height: 326px;">		
-	<form name="groupFrom" method="post" action="{{ route('admin.rbac.permission.destroy') }}">
+<div class="content" style="height: 326px;">	
+	
 		<table class="list_table">
 			<colgroup>
-				<col width="40px">
 				<col>
 				<col>
 				<col>
@@ -52,8 +49,7 @@
 			</colgroup>
 			<tbody>	
 			@foreach ($permissionRows as $element)			
-				<tr  data-id="{{$element['id']}}" data-parent="{{$element['pid']}}">
-					<td><input type="checkbox" value="{{$element['id']}}" class="item_checkbox" name="id[]"></td>
+				<tr  data-id="{{$element['id']}}" data-parent="{{$element['pid']}}">					
 					<td>
 						<img class="operator" src="/static/admin/images/close.gif"  alt="关闭">						
 						{{$element['name']}}
@@ -62,12 +58,18 @@
 					<td>{{$element['description']}}</td>
 					<td>{{$element['created_at']}}</td>
 					<td>{{$element['updated_at']}}</td>
-					<td></td>
+					<td>
+						<a title="{{ trans('common.delete') }}{{ trans('rbac.permission') }}" href="javascript:void(0);" data-msg="{{ trans('common.confirm_delete',['name'=>trans('rbac.permission')]) }}" data-href="{{ route('admin.rbac.permission.destroy' , ['id'=>$element['id']]) }}">
+						<img alt="{{ trans('common.delete') }}" src="/static/admin/images/icon_del.gif" class="operator">
+						</a>		
+						<a title="{{ trans('common.edit') }}{{ trans('rbas.permission') }}" href="{{ route('admin.rbac.permission.edit' , ['id'=>$element['id']]) }}">
+							<img alt="{{ trans('common.edit') }}" src="/static/admin/images/icon_edit.gif" class="operator">
+						</a>
+					</td>
 				</tr>
 				@if(isset($element['children']))
 					@foreach ($element['children'] as $el)					
-					<tr data-id="{{$el['id']}}" data-parent="{{$el['pid']}}">
-						<td><input type="checkbox" value="{{$el['id']}}" class="item_checkbox" name="id[]"></td>
+					<tr data-id="{{$el['id']}}" data-parent="{{$el['pid']}}">						
 						<td>							
 							<img class="operator"  style="margin-left:30px" src="/static/admin/images/close.gif"  alt="关闭">							
 							{{$el['name']}}
@@ -76,7 +78,14 @@
 						<td>{{$el['description']}}</td>
 						<td>{{$el['created_at']}}</td>
 						<td>{{$el['updated_at']}}</td>
-						<td></td>
+						<td>
+							<a title="{{ trans('common.delete') }}{{ trans('rbac.permission') }}" href="javascript:void(0);" data-msg="{{ trans('common.confirm_delete',['name'=>trans('rbac.permission')]) }}" data-href="{{ route('admin.rbac.permission.destroy' , ['id'=>$el['id']]) }}">
+							<img alt="{{ trans('common.delete') }}" src="/static/admin/images/icon_del.gif" class="operator">
+							</a>		
+							<a title="{{ trans('common.edit') }}{{ trans('rbas.permission') }}" href="{{ route('admin.rbac.permission.edit' , ['id'=>$el['id']]) }}">
+								<img alt="{{ trans('common.edit') }}" src="/static/admin/images/icon_edit.gif" class="operator">
+							</a>							
+						</td>
 					</tr>
 					@endforeach
 				@endif
@@ -84,7 +93,7 @@
 			</tbody>
 
 		</table>
-	</form>
+	
 </div>
 
 

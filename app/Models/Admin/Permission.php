@@ -3,6 +3,7 @@
 namespace App\Models\Admin;
 
 use Zizaco\Entrust\EntrustPermission;
+use DB;
 
 class Permission extends EntrustPermission
 {
@@ -27,4 +28,6 @@ class Permission extends EntrustPermission
 		}
 		return $allForChildren;
 	}
+
+	
 }

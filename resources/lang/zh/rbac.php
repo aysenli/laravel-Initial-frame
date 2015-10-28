@@ -9,6 +9,10 @@ return [
 	'role_has_manage'	=>	'此角色下有用户存在不能删除',
 	'permission'	=>	'权限',
 	'permission_display_name'=>'权限名称',
-	'permission_name'	=>	'权限控制器'
+	'permission_name'	=>	'权限控制器',
+	'permission_not_exist' => '权限不存在',
+	'user'	=>	'用户',
+	'user_name'=>'用户名',
+
 
 ];

@@ -27,9 +27,9 @@
 					<th>{{ trans('rbac.role_name') }}</th>
 					<td>
 						@if(isset($roleRow) && isset($roleRow['roleRow']))
-						<input type="text" name="name" value="{{ $roleRow['roleRow']['name'] }}" class="small" pattern="code" />
+						<input type="text" name="name" value="{{ $roleRow['roleRow']['name'] }}" alt="{{ trans('rbac.role_name') }}({{ trans('common.required') }})" class="small" pattern="code" />
 						@else
-						<input type="text" name="name" value="{{ old('name') }}" class="small" pattern="code" />
+						<input type="text" name="name" value="{{ old('name') }}" alt="{{ trans('rbac.role_name') }}({{ trans('common.required') }})" class="small" pattern="code" />
 						@endif
 						<label>*{{ trans('rbac.role_name') }}({{ trans('common.required') }})</label>
 					</td>

@@ -32,7 +32,15 @@
 	</div>
 	<div class="right_body">
 		<div class="top_subnav">{{ trans('common.common_title') }} ＞ {{ $userIndex }}</div>
-
+		@if (isset($errors))
+			<div class="alt-error">
+				@foreach ($errors as $element)
+					@foreach ($element as $el)
+						<span>{{$el}}</span>
+					@endforeach
+				@endforeach
+			</div>
+		@endif		
 		@yield('content')
 	</div>
 </body>
