@@ -53,7 +53,7 @@ class Navigation extends Model
     public function getAllNavigationForChildren($pid = 0)
 	{
 		$allForChildren = array();
-		$navigationRows = $this->select('id','name','pid')->orderBy('pid' , 'asc')->where('pid',$pid)->get();
+		$navigationRows = $this->orderBy('pid' , 'asc')->where('pid',$pid)->get();
 		if($navigationRows){
 			foreach ($navigationRows as $key => $value) {		
 				$value->children = $this->getAllNavigationForChildren($value['id']);

@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Illuminate\Support\Facades\Config;
 
+use DB;
+
 class Manage extends  Model implements AuthenticatableContract, CanResetPasswordContract {
     use Authenticatable, CanResetPassword, EntrustUserTrait;
 
@@ -35,6 +37,7 @@ class Manage extends  Model implements AuthenticatableContract, CanResetPassword
      */
     protected $hidden = ['password', 'remember_token'];
 
+
     /**
      * @author luffyzhao
      * @todo 因为改了用户表和用户主键字段所以要重写 EntrustUserTrait::roles 方法
@@ -55,5 +58,95 @@ class Manage extends  Model implements AuthenticatableContract, CanResetPassword
             }  
         }
         return $roles;
+    }
+
+
+    /**
+     * 视图创建角色
+     * @param  [type] $inputs [description]
+     * @return [type]         [description]
+     */
+    public function submitForCreate($inputs)
+    {
+        DB::beginTransaction();     
+        try {
+
+            $manageRowId = $this->insertGetId([
+                'name'=>$inputs['name'],
+                'email'=>$inputs['email'],
+                'password'=> bcrypt($inputs['password'])
+            ]);
+            $manageModel = $this->find($manageRowId);
+            if(isset($inputs['roles']) && !empty($inputs['roles'])){
+                 $manageModel->roles()->sync($inputs['roles']);
+            }
+
+            DB::commit();
+            return ['status'=>true , 'role_id'=>$manageRowId];    
+        } catch (Exception $e) {            
+            DB::rollback();
+            return ['status'=>false , 'error'=>trans('rbac.manage').trans('common.add').trans('common.fail')];
+        }
+
+    }
+
+    /**
+     * 视图修改角色
+     * @param  [type] $id     [description]
+     * @param  [type] $inputs [description]
+     * @return [type]         [description]
+     */
+    public function submitForUpdate($id , $inputs)
+    {
+        $isAble  = $this->where('id','<>' , $id)
+            ->whereRaw("(`name`='{$inputs['name']}' OR `email`='{$inputs['email']}')")
+            ->count();
+
+        if($isAble > 0){
+            return ['status'=>false , 'error'=>trans('auth.usered' , ['name'=>trans('rbac.manage_name')])];
+        }
+
+        DB::beginTransaction();
+        try{
+            $manageRow = $this->find($id);            
+            if(isset($inputs['password']) && $inputs['password'] != ''){
+                $manageRow->password = bcrypt($inputs['password']);
+            }
+            $manageRow->name = $inputs['name'];
+            $manageRow->email = $inputs['email'];
+            $manageRow->save();
+            
+            $manageRow->roles()->detach();
+
+            if(isset($inputs['roles']) && !empty($inputs['roles'])){
+                 $manageRow->roles()->sync($inputs['roles']);
+            }
+
+            DB::commit();
+            return ['status'=>true];  
+        }catch(Exception $e){
+            DB::rollback();
+            return ['status'=>false , 'error'=>trans('rbac.manage').trans('common.edit').trans('common.fail')];
+        }
+    }
+
+    /**
+     * 删除
+     * @param  string $value [description]
+     * @return [type]        [description]
+     */
+    public function submitForDestroy($id)
+    {
+        DB::beginTransaction(); 
+        try{
+            $manageRow = $this->find($id);
+            $manageRow->roles()->detach();
+            $manageRow->delete();
+            DB::commit();
+            return ['status'=>true];
+        }catch(Exception $e){
+            DB::rollback();
+            return ['status'=>false , 'error'=>trans('rbac.manage').trans('common.delete').trans('common.fail')];
+        }
     }
 }

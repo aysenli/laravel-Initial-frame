@@ -305,12 +305,10 @@ ul.select{list-style:none;height:184px;overflow: scroll ;overflow-x:hidden;borde
 	ul.select li{list-style:none;overflow:hidden;height:22px; float:left; clear:both;line-height:22px;border-bottom:#F1F1F1  dotted 1px;padding-right:6px;width:100%}
 	ul.select li.even{background:#FD9;}
 
-img.ico{
-width:22px;
-border:1px solid #ccc;
-vertical-align:middle;
-}
+img.ico { width: 22px; border: 1px solid #ccc; vertical-align: middle; }
 
+code , abbr { border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; border-top-left-radius: 4px; border-top-right-radius: 4px; color: #c7254e; font-size: 90%; padding-bottom: 2px; padding-left: 4px; padding-right: 4px; padding-top: 2px; }
+/*abbr[title] { border-bottom: 1px dotted; }*/
 div.alt-error{ height: 20px; line-height: 20px; color: #f33; }
 
 /*fileform*/

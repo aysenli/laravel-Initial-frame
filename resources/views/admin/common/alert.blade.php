@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>跳转</title>
+	<script src="/static/admin/js/jquery.min.js"></script>
 </head>
 <style type="text/css">
 	*{margin: 0;padding: 0;}

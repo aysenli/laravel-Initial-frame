@@ -11,8 +11,10 @@ return [
 	'permission_display_name'=>'权限名称',
 	'permission_name'	=>	'权限控制器',
 	'permission_not_exist' => '权限不存在',
-	'user'	=>	'用户',
-	'user_name'=>'用户名',
+	'manage'	=>	'用户',
+	'manage_name'=>'用户名',
+	'navigation'=>'导航',
+	'navigation_name'	=>	'导航名称',
 
 
 ];

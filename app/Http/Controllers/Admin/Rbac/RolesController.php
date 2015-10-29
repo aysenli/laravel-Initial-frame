@@ -156,16 +156,16 @@ class RolesController extends AdminController
 
         $result = $roleModel->submitForDestroy($id);
 
-        $location = ['url'=>route('admin.rbac.roles.index'),'name'=>trans('rbac.role').trans('common.list')];
+        // $location = ['url'=>route('admin.rbac.roles.index'),'name'=>trans('rbac.role').trans('common.list')];
         if($result['status']){            
             $alert = [
             'type'=>'success',
-            'data'=>[trans('rbac.role').trans('common.delete').trans('common.success')]           
+            'message'=>trans('rbac.role').trans('common.delete').trans('common.success')         
             ];
         }else{
             $alert = [
             'type'=>'warning',
-            'data'=>[$result['error']]
+            'message'=>$result['error']
             ];
         }
         return response()->json($alert);

@@ -40,5 +40,8 @@ return [
 	'confirm_delete' => '确定该:name删除？',
 	'belong_to'	=>	'所属',
 	'superior' => '最上级',
-	'email'	=>	'邮箱'
+	'email'	=>	'邮箱',
+	'confirm'=>'确认',
+	'url'	=>	'链接',
+	'sort'	=> '排序'
 ];

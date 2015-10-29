@@ -105,9 +105,11 @@
 
 		if($(this).attr('src') == src[0]){
 			$(this).attr('src',src[1]);
+			$("[data-parent='"+pid+"'] td:first-child img").trigger('click');
 			$("[data-parent='"+pid+"']").hide();
 		}else{
 			$(this).attr('src',src[0]);
+			$("[data-parent='"+pid+"'] td:first-child img").trigger('click');
 			$("[data-parent='"+pid+"']").show();
 		}
 		

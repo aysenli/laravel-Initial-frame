@@ -6,18 +6,19 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Admin\AdminController;
 
-use App\Models\Admin\Manage;
+use App\Models\Admin\Navigation;
 
-class UserController extends AdminController
+class NavigationController extends AdminController
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Navigation $navigationModel)
     {
-        view('admin.rbac.user.index')->withPages(Manage::paginate(15));
+        return view('admin.rbac.navigation.index')
+            ->with('navigationRows' , $navigationModel->getAllNavigationForChildren());
     }
 
     /**

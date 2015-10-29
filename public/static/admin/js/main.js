@@ -83,16 +83,18 @@ $(function(){
 	$("[data-href]").bind('click',function(){
 		var href = $(this).data('href');
 		var msg = $(this).data('msg');
-		art.dialog.confirm(msg, function(){
+		var confirm = art.dialog.confirm(msg, function(){
     		$.ajax({
 	            url: href, type:'DELETE',
 	            success: function (json) {
+	            	confirm.close();
+	            	var message = art.dialog({
+					    title: 'loading'
+					});
 	                if(json.type == 'success'){
 	                    location.reload();
 	                }else{
-	                	art.dialog({
-	      					content:json.data[0].message,
-	      				});	
+	                	message.content(json.message);            	
 	                }
 	                               
 	            }

@@ -158,12 +158,12 @@ class PermissionController extends AdminController
 
         $alert = [
             'type'=>'warning',
-            'data'=>[trans('common.delete').trans('common.fail')]
+            'message'=>trans('common.delete').trans('common.fail')
         ];
 
         if($result){            
            $alert['type'] = 'success';
-           $alert['data'] = [trans('common.delete').trans('common.success')];
+           $alert['message'] = trans('common.delete').trans('common.success');
         }
 
         return response()->json($alert);

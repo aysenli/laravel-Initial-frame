@@ -105,16 +105,18 @@ class Role extends EntrustRole
      */
     public function submitForUpdate($id,$inputs)
     {   
-        $roleRow = $this->find($id);
-        if(!$roleRow){
+        $isAble = $this->where('id' , '<>' , $id)->where('name' , $inputs['name'])->count();
+
+        if($isAble > 0){
             return [
                 'status'=>false,
-                'error' => trans('common.page_404')
+                'error' => trans('auth.usered' , ['name'=>trans('rbac.role')])
             ];
         }
+
         DB::beginTransaction(); 
         try {
-            
+            $roleRow = $this->find($id);
             $roleRow->name = $inputs['name'];
             $roleRow->display_name = $inputs['display_name'];
             $roleRow->description = $inputs['description'];
