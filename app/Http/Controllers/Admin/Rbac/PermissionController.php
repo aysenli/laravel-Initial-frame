@@ -46,31 +46,9 @@ class PermissionController extends AdminController
 
         $inputs = $permissionRequest->all();
 
-        $permissionID = $permissionModel->insertGetId([
-            'name'=>$inputs['name'] , 
-            'display_name'=>$inputs['display_name'] , 
-            'description'=>$inputs['description']
-        ]);
+        $result = $permissionModel->submitForCreate($inputs);
 
-        if($permissionID){
-            $hrefs = [
-                ['url'=>route('admin.rbac.permission.index') , 'name'=>trans('rbac.permission').trans('common.list')], 
-                ['url'=>route('admin.rbac.permission.edit' , ['id'=>$permissionID]) , 'name'=>trans('common.edit').trans('rbac.permission')]
-            ];
-            $alert = [
-                'type'=>'success',
-                'hrefs'=>$hrefs,
-                'location' => ['url'=>route('admin.rbac.permission.edit' , ['id'=>$permissionID]) ,'name'=>trans('common.edit').trans('rbac.permission')],
-                'data'  =>  trans('common.add').trans('rbac.permission').trans('common.success')
-            ];
-        }else{
-            $alert =  [
-                'type'=>'warning',
-                'data'=>trans('common.add').trans('rbac.permission').trans('common.fail'),
-                'location'=>['url'=>route('admin.rbac.permission.create') , 'name'=>trans('common.add').trans('rbac.permission')]
-            ];
-        }
-        return view('admin.common.alert',$alert);
+        return view('admin.common.alert',ViewAlert::getViewInstance()->create($result));
     }
    
 
@@ -104,46 +82,11 @@ class PermissionController extends AdminController
      */
     public function update(UpdatePermissionRequest $permissionRequest , Permission $permissionModel , $id)
     {
-        $inputs = $permissionRequest->all();
-
-        $alert = [
-            'type'=>'warning',
-            'data'=>trans('common.edit').trans('rbac.fail'),
-            'hrefs'=>[
-                ['url'=>route('admin.rbac.permission.index') , 'name'=>trans('rbac.permission').trans('common.list')],
-                ['url'=>route('admin.rbac.permission.edit' , ['id'=>$id]) , 'name'=>trans('common.edit').trans('rbac.permission')]
-            ],
-            'location'=>[
-                'url' => route('admin.rbac.permission.edit' , ['id'=>$id]),
-                'name'=>trans('common.edit').trans('rbac.permission')
-            ]
-        ];
-
-        $isAble = $permissionModel->where('id', '<>', $id)->where('name', $inputs['name'])->count();
-        
-        if($isAble){
-            $alert['data'] = trans('common.unique' , ['name'=>trans('rbac.permission')]);
-
-            return view('admin.common.alert',$alert);
-        }
+        $inputs = $permissionRequest->all();      
      
-        $result  = $permissionModel->where('id', $id)->update([
-            'name'=>$inputs['name'],
-            'display_name' => $inputs['display_name'],
-            'description' => $inputs['description']
-        ]);
+        $result  = $permissionModel->submitForUpdate($id , $inputs);
 
-        if(!$result){
-            $alert['data'] = trans('common.unique' , ['name'=>trans('rbac.permission')]);
-            // return view('admin.common.alert', $alert);
-        }else{
-            $alert['data'] = trans('common.edit').trans('common.success');
-            $alert['type'] = 'success';   
-        }
-        
-
-        return view('admin.common.alert' , $alert);
-
+        return view('admin.common.alert',ViewAlert::getViewInstance()->create($result));
     }
 
     /**
@@ -154,18 +97,8 @@ class PermissionController extends AdminController
      */
     public function destroy(Permission $permissionModel , $id)
     {
-        $result = $permissionModel->find($id)->delete();
+        $result = $permissionModel->submitForDestroy($id);        
 
-        $alert = [
-            'type'=>'warning',
-            'message'=>trans('common.delete').trans('common.fail')
-        ];
-
-        if($result){            
-           $alert['type'] = 'success';
-           $alert['message'] = trans('common.delete').trans('common.success');
-        }
-
-        return response()->json($alert);
+        return response()->json(ViewAlert::getViewInstance()->create($result));
     }
 }

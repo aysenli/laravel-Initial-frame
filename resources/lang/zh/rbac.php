@@ -15,6 +15,7 @@ return [
 	'manage_name'=>'用户名',
 	'navigation'=>'导航',
 	'navigation_name'	=>	'导航名称',
+	'navigation_has_children'	=>'此导航还有子目录，请先删除导航下的子目录'
 
 
 ];

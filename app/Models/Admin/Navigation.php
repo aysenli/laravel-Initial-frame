@@ -2,12 +2,15 @@
 
 namespace App\Models\Admin;
 
+use DB;
 use Illuminate\Database\Eloquent\Model;
 
 
 class Navigation extends Model
 {
 	protected $table = 'navigation';
+
+	public $timestamps = false;
 
 	public function roles()
 	{
@@ -25,7 +28,7 @@ class Navigation extends Model
     {
     	$navigationData	=	array();
 
-    	$navigationRows	=	$this->where('pid',$navigationPid)->orderBy('id','sort')->get();
+    	$navigationRows	=	$this->where('pid',$navigationPid)->orderBy('id','ASC')->orderBy('sort','ASC')->get();
     	
     	if($navigationRows){    	
     		// 检查权限    		
@@ -62,6 +65,70 @@ class Navigation extends Model
 		}			
 
 		return $allForChildren;
+	}
+
+	/**
+	 * 创建导航
+	 * @param  [type] $inputs [description]
+	 * @return [type]         [description]
+	 */
+	public function submitForCreate($inputs)
+	{
+		$navigationId = $this->insertGetId([
+			'name'=>$inputs['name'],
+            'url'=>$inputs['url'],
+            'pid'=>$inputs['pid'],
+            'sort'=>$inputs['sort']
+		]);
+
+		if($navigationId > 0){
+			return ['status'=>true , 'id'=>$navigationId];    
+		}
+		return ['status'=>false];
+	}
+
+
+	public function submitForUpdate($id , $inputs)
+	{
+		$navigationRow = $this->find($id);
+
+		if(!$navigationRow){
+			return ['status'=>false , 'error'=>trans('auth.id_not_exists')];
+		}
+
+		$navigationRow->name = $inputs['name'];
+        $navigationRow->url = $inputs['url'];
+        $navigationRow->sort=$inputs['sort'];
+        $navigationRow->pid=$inputs['pid'];
+        $navigationRow->save();
+		
+		return ['status'=>true , 'id'=>$id];        
+	}
+
+	/**
+	 * 删除导航
+	 * @param  string $value [description]
+	 * @return [type]        [description]
+	 */
+	public function submitForDestroy($id)
+	{
+		$isAble = $this->where('pid',$id)->count();
+		if($isAble>0){
+			return ['status'=>false , 'error'=>trans('rbac.navigation_has_children')];
+		}
+
+		$navigationRow = $this->find($id);
+		DB::beginTransaction(); 
+
+        try{
+			$navigationRow->roles()->detach();
+			$navigationRow->delete();
+			DB::commit();
+			return ['status'=>true];
+		}catch(Exception $e){	
+			DB::rollback();
+			return ['status'=>false];
+		}
 	}
 
 }

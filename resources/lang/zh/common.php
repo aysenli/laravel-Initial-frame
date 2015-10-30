@@ -43,5 +43,6 @@ return [
 	'email'	=>	'邮箱',
 	'confirm'=>'确认',
 	'url'	=>	'链接',
-	'sort'	=> '排序'
+	'sort'	=> '排序',
+	
 ];

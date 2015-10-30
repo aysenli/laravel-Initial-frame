@@ -1,5 +1,6 @@
 
-$(function(){
+$(function(){		
+
 	$.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -15,6 +16,10 @@ $(function(){
 	//checkboxClass
 	if(typeof $.fn.checkboxClass != 'undefined'){
 		$("[type='checkbox']").checkboxClass();
+	}
+
+	if(typeof $.fn.CustomSelect != 'undefined'){
+		$('select').CustomSelect({visRows:10});	
 	}
 	
 

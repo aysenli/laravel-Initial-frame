@@ -53,31 +53,8 @@ class RolesController extends AdminController
         $inputs = $rolesRequest->all();
         $roleModel = new Role();
         $result = $roleModel->submitForCreate($inputs);
-        $alert = [];
-        $location = ['url'=>route('admin.rbac.roles.create'),'name'=>trans('rbac.add_roles')];
-        if($result['status']){
-            $location['url'] = route('admin.rbac.roles.edit',['id'=>$result['role_id']]);
-            $location['name'] = trans('common.view').trans('rbac.role');
-            $alert = [
-                'type'=>'success',
-                'data'=>[
-                    trans('rbac.add_roles').trans('common.success')
-                ],
-                'location'=>$location, 
-                'hrefs'=>[
-                    ['url'=>route('admin.rbac.roles.index'),'name'=>trans('rbac.role').trans('common.list')],
-                    $location
-                ]
-            ];
-        }else{
-            $alert = [
-            'type'=>'warning',
-            'data'=>[$result['error']],
-            'location'=>$location
-            ];
-        }
-        // return new JsonResponse($alert);
-        return view('admin.common.alert',$alert);
+
+        return view('admin.common.alert',ViewAlert::getViewInstance()->create($result));
     }
 
 
@@ -97,7 +74,7 @@ class RolesController extends AdminController
         if(!($roleRow = $roleModel->getForEdit($id))){
             return view('admin.common.alert',[
                 'type'=>'warning' ,
-                'data'=>[trans('page_404')],
+                'error'=>[trans('page_404')],
                 'location'=>[
                     'url'=>route('admin.rbac.roles.index') , 
                     'name'=>trans('rbac.role').trans('common.list')
@@ -123,25 +100,7 @@ class RolesController extends AdminController
         
         $result = $roleModel->submitForUpdate($id , $inputs);
 
-        $location = ['url'=>route('admin.rbac.roles.edit',['id'=>$id]),'name'=>trans('common.view').trans('rbac.role')];
-        if($result['status']){     
-            $alert = [
-            'type'=>'success',
-            'data'=>[trans('rbac.role').trans('common.edit').trans('common.success')],
-            'location'=>$location,
-            'hrefs'=>[
-            ['url'=>route('admin.rbac.roles.index'),'name'=>trans('rbac.role').trans('common.list')],
-            $location
-            ]
-            ];
-        }else{
-            $alert = [
-            'type'=>'warning',
-            'data'=>[$result['error']],
-            'location'=>$location
-            ];
-        }
-        return view('admin.common.alert',$alert);
+        return view('admin.common.alert',ViewAlert::getViewInstance()->create($result));
     }
 
     /**
@@ -155,20 +114,7 @@ class RolesController extends AdminController
         $roleModel = new Role();
 
         $result = $roleModel->submitForDestroy($id);
-
-        // $location = ['url'=>route('admin.rbac.roles.index'),'name'=>trans('rbac.role').trans('common.list')];
-        if($result['status']){            
-            $alert = [
-            'type'=>'success',
-            'message'=>trans('rbac.role').trans('common.delete').trans('common.success')         
-            ];
-        }else{
-            $alert = [
-            'type'=>'warning',
-            'message'=>$result['error']
-            ];
-        }
-        return response()->json($alert);
-        // return view('admin.common.alert',$alert);
+     
+        return response()->json(ViewAlert::getViewInstance()->create($result));
     }
 }

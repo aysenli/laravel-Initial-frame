@@ -22,6 +22,7 @@
 	<script src="/static/admin/js/function.js" type="text/javascript"></script>
 	<script type="text/javascript" src="/static/admin/js/jquery.popstatus.js"></script>
 	<script type="text/javascript" src="/static/admin/js/jquery.preloader.js"></script>
+	<script type="text/javascript" src="/static/admin/js/jquery.custom-select.js"></script>
 	<script src="/static/admin/js/main.js"></script>
 </head>
 <body>

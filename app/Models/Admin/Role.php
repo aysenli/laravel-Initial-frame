@@ -88,12 +88,11 @@ class Role extends EntrustRole
                 $roleModel->navigation()->sync($inputs['navigation_id']);   
     		}
     		DB::commit();
-			return ['status'=>true , 'role_id'=>$roleID];    		
+			return ['status'=>true , 'id'=>$roleID];    		
     	} catch (Exception $e) {
     		DB::rollback();
     		return [
-    			'status'=>false,
-    			'error'=>trans('rbac.add_roles').trans('common.fail')
+    			'status'=>false    			
     		];
     	}
     }
@@ -110,6 +109,7 @@ class Role extends EntrustRole
         if($isAble > 0){
             return [
                 'status'=>false,
+                'id'=>$id,
                 'error' => trans('auth.usered' , ['name'=>trans('rbac.role')])
             ];
         }
@@ -136,12 +136,11 @@ class Role extends EntrustRole
 
             DB::commit();
 
-            return ['status'=>true];  
+            return ['status'=>true , 'id'=>$id];  
         } catch (Exception $e) {
             DB::rollback();
             return [
-                'status'=>false,
-                'error'=>trans('rbac.role').trans('common.edit').trans('common.fail')
+                'status'=>false               
             ];
         }
     }
@@ -176,8 +175,7 @@ class Role extends EntrustRole
         } catch (Exception $e) {
             DB::rollback();
             return [
-                'status'=>false,
-                'error'=>trans('rbac.role').trans('common.delete').trans('common.fail')
+                'status'=>false                
             ];
         }
         

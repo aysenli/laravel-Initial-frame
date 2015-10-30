@@ -1,13 +1,6 @@
 @extends('admin.main')
 
 @section('content')
-	{{-- expr --}}
-<div class="headbar">
-	<ul class="tab" name="menu1">
-		<li><a href="#tab-1" hidefocus="true" class="selected">{{ trans('common.basic_information') }}</a></li>		
-	</ul>
-
-</div>
 
 <div class="content_box">
 	<div class="content form_content">	

@@ -82,10 +82,10 @@ class Manage extends  Model implements AuthenticatableContract, CanResetPassword
             }
 
             DB::commit();
-            return ['status'=>true , 'role_id'=>$manageRowId];    
+            return ['status'=>true , 'id'=>$manageRowId];    
         } catch (Exception $e) {            
             DB::rollback();
-            return ['status'=>false , 'error'=>trans('rbac.manage').trans('common.add').trans('common.fail')];
+            return ['status'=>false];
         }
 
     }
@@ -123,10 +123,10 @@ class Manage extends  Model implements AuthenticatableContract, CanResetPassword
             }
 
             DB::commit();
-            return ['status'=>true];  
+            return ['status'=>true , 'id'=>$id];  
         }catch(Exception $e){
             DB::rollback();
-            return ['status'=>false , 'error'=>trans('rbac.manage').trans('common.edit').trans('common.fail')];
+            return ['status'=>false];
         }
     }
 
@@ -146,7 +146,7 @@ class Manage extends  Model implements AuthenticatableContract, CanResetPassword
             return ['status'=>true];
         }catch(Exception $e){
             DB::rollback();
-            return ['status'=>false , 'error'=>trans('rbac.manage').trans('common.delete').trans('common.fail')];
+            return ['status'=>false];
         }
     }
 }

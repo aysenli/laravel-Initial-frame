@@ -20,7 +20,8 @@ return [
 	'login_success' => '登陆成功',
 	'login_not_success'	=>	'登陆不成功',
 	'password_update_tip'	=>	'密码无需更改时，请留空',
-
+	'id_not_exists' => 'ID不存在',
+	
 	'not_empty'	=>	':name不能为空',
 	'max_length'	=>	':name长度不能超过:count个字符',
 	'alpha_dash'	=>	':name仅允许字母、数字、破折号（-）以及底线（_）',
@@ -29,6 +30,8 @@ return [
 	'array'			=>	':name值不正确',
 	'confirmed'		=>	':name确认不通过',
 	'usered'		=>	':name已被使用',
+	'url'			=>	':name不是一个有效的URL地址',
+	'numeric'		=>	':name不是一个有效的数值'
 
 
 ];

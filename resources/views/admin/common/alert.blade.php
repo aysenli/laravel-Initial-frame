@@ -19,12 +19,12 @@
 		@else
 		<h1>:-)</h1>
 		@endif
-		@if (!empty($data) && is_array($data))
-		@foreach ($data as $element)
+		@if (!empty($message) && is_array($message))
+		@foreach ($message as $element)
 			<p>{{$element}}</p>
 		@endforeach
-		@elseif(!empty($data) && is_string($data))
-		<p>{{$data}}</p>
+		@elseif(!empty($message) && is_string($message))
+		<p>{{$message}}</p>
 		@endif
 		@if (isset($hrefs))		
 		<p>			
