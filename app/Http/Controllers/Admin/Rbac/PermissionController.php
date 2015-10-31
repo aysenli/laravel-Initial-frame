@@ -7,7 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Admin\AdminController;
 
 use App\Models\Admin\Permission;
-
+use App\Foundation\View\ViewAlert;
 use App\Http\Requests\Admin\Rbac\CreatePermissionRequest;
 use App\Http\Requests\Admin\Rbac\UpdatePermissionRequest;
 use Session;

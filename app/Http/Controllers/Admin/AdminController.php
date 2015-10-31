@@ -14,14 +14,12 @@ class AdminController extends Controller
 {
    public function __construct()
    {    
+      //获取面包屑
+      $this->userIndex();
       //如果session有存在errors
       if($erros = Session::get('errors')){
         view()->share('errors' , $erros->toArray());
-      }else{
-        //获取面包屑
-        $this->userIndex();
-      }
-      
+      }      
    }
 
    /**
@@ -33,9 +31,9 @@ class AdminController extends Controller
         $permission = new Permission();
         $current = Route::currentRouteName();
         $name = '';
-        if ($permissionRows = Cache::has('permissionRows')){
-            $permissionRow = Cache::get('permissionRows');
-            $name = (isset($permissionRow[$current]) && isset($permissionRow[$current]['display_name'])) ? $permissionRow[$current]['display_name'] : '';
+        if (Cache::has("permissionRows[{$current}]")){
+            $permissionRow = Cache::get("permissionRows[{$current}]");
+            $name =    isset($permissionRow['display_name']) && $permissionRow['display_name'] ? $permissionRow['display_name'] : '';         
         }
         if($name == ''){
           $name = $permission->whereName($current)->pluck('display_name');

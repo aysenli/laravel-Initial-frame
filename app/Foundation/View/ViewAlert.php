@@ -37,15 +37,17 @@ class ViewAlert {
 		$method = 'get'.ucfirst($this->method);	
 
 		if($result['status']){
+			$this->alert['type'] = 'success';
 			$method .= 'SuccessMessage';
 		}else{
+			$this->alert['type'] = 'fail';
 			$method .= 'FailMessage';
 		}
 		$id = isset($result['id']) ? $result['id'] : 0;
 		$this->$method($id);
 
 		if(isset($result['error'])){
-			$this->alert['message'] .= $result['error'];
+			$this->alert['message'] .= ' '.$result['error'];
 		}
 		
 
@@ -131,9 +133,9 @@ class ViewAlert {
 
 		$current = $this->getCurrentForParam($method);
 		$name = '';
-		if ($permissionRows = Cache::has('permissionRows')){
-		    $permissionRow = Cache::get('permissionRows');
-		    $name = (isset($permissionRow[$current]) && isset($permissionRow[$current]['display_name'])) ? $permissionRow[$current]['display_name'] : '';
+		if (Cache::has("permissionRows[{$current}]")){
+		    $permissionRow = Cache::get("permissionRows[{$current}]");
+		    $name =    isset($permissionRow['display_name']) && $permissionRow['display_name'] ? $permissionRow['display_name'] : '';         
 		}
 
 		if($name == ''){

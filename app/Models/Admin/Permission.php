@@ -15,27 +15,19 @@ class Permission extends EntrustPermission
 	public function getAllPermissionForChildren()
 	{
 		$allForChildren = [];
-		$isCache = Cache::has('permissionRows');
-		if($isCache){
-			$permissionRows = Cache::get('permissionRows');
-		}else{
-			$permissionRows = $this->orderBy('pid' , 'asc')->get()->toArray();
-			$permissionRowsCache = [];
-		}	
-
+		$permissionRows = $this->orderBy('pid' , 'asc')->get()->toArray();
+		
 		foreach ($permissionRows as $key => $value) {
 			if($value['pid'] == 0){
 				$allForChildren[$value['id']]	=	$value;
 			}else{				
 				$allForChildren[$value['pid']]['children'][$value['id']] = $value;
 			}
-			if(!$isCache){
-				$permissionRowsCache[$value['name']] = $value;
+			if(! Cache::has("permissionRows[{$value['name']}]")){
+				Cache::forever("permissionRows[{$value['name']}]" , $value);
 			}
 		}
-		if(!$isCache){
-			Cache::forever('permissionRows' , $permissionRowsCache);
-		}
+		
 		return $allForChildren;
 	}
 
@@ -46,7 +38,7 @@ class Permission extends EntrustPermission
 	 */
 	public function submitForCreate($inputs)
 	{
-		$permissionId = $this->submitForCreate([
+		$permissionId = $this->insertGetId([
             'name'=>$inputs['name'] , 
             'display_name'=>$inputs['display_name'] , 
             'pid'   =>  $inputs['pid'],
@@ -54,6 +46,7 @@ class Permission extends EntrustPermission
         ]);
 
         if($permissionId > 0){
+        	Cache::forever("permissionRows[{$inputs['name']}]",$this->find($permissionId)->toArray());        	
 			return ['status'=>true , 'id'=>$permissionId];    
 		}
 		return ['status'=>false];
@@ -74,6 +67,10 @@ class Permission extends EntrustPermission
 
 		$permissionRow = $this->find($id);
 
+		if(Cache::has("permissionRows[{$permissionRow['name']}]")){
+        	Cache::forget("permissionRows[{$permissionRow['name']}]");
+    	}
+
 		if(!$permissionRow){
 			return ['status'=>false , 'error'=>trans('auth.id_not_exists')];
 		}
@@ -84,6 +81,7 @@ class Permission extends EntrustPermission
             'pid'   =>  $inputs['pid'],
             'description' => $inputs['description']
         ]);
+		Cache::forever("permissionRows[{$inputs['name']}]" , $this->find($id)->toArray());       
 
         return ['status'=>true , 'id'=>$id];   
 	}
@@ -95,8 +93,11 @@ class Permission extends EntrustPermission
 	 */
 	public function submitForDestroy($id)
 	{
-		$this->find($id)->delete();
-
+		$permissionRow = $this->find($id);
+		$permissionRow->delete();
+		if(Cache::has("permissionRows[{$permissionRow->name}]")){
+    		Cache::forget("permissionRows[{$permissionRow->name}]");
+    	}
 		return ['status'=>true];
 	}
 }

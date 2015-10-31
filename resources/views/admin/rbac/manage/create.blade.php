@@ -68,7 +68,7 @@
 					<td>					
 					@foreach ($roleRows as $element)
 						<label class="attr">					
-						@if (in_array($element->id , $roleCheckeds))
+						@if (isset($$roleCheckeds) && in_array($element->id , $roleCheckeds))
 							<input type="checkbox" name="roles[]" checked="checked" value="{{ $element->id }}">
 						@else
 							<input type="checkbox" name="roles[]" value="{{ $element->id }}">

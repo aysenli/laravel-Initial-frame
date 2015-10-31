@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin\Rbac;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
 use App\Http\Controllers\Admin\AdminController;
 
 use App\Models\Admin\Manage;
@@ -22,7 +21,7 @@ class ManageController extends AdminController
     public function index(Request $request)
     {
         $name = $request->input('name');
-        if($name != '')
+        if($name == '')
             return view('admin.rbac.manage.index')->withPages(Manage::paginate(15));
         else
             return view('admin.rbac.manage.index')->withPages(Manage::where('name'  , "{$name}")->paginate(15));
