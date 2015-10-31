@@ -40,7 +40,7 @@ class ViewAlert {
 			$this->alert['type'] = 'success';
 			$method .= 'SuccessMessage';
 		}else{
-			$this->alert['type'] = 'fail';
+			$this->alert['type'] = 'warning';
 			$method .= 'FailMessage';
 		}
 		$id = isset($result['id']) ? $result['id'] : 0;

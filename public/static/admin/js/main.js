@@ -15,7 +15,7 @@ $(function(){
 	}
 	//checkboxClass
 	if(typeof $.fn.checkboxClass != 'undefined'){
-		$("[type='checkbox']").checkboxClass();
+		$(".jquerycheckbox[type='checkbox']").checkboxClass();
 	}
 
 	if(typeof $.fn.CustomSelect != 'undefined'){

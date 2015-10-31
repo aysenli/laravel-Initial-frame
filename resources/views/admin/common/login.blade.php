@@ -56,9 +56,9 @@
 <script type="text/javascript" src="/static/admin/js/main.js"></script>  
 <script type="text/javascript">
 function ajaxSuccess(json , xhrstatus , exception)
-{console.log(json);
+{
   if(xhrstatus == 'success'){
-    if(json.status == 0 || !json){
+    if(!json || json.type == 'warning'){
       $.popstatus(4, json.message,true);
     }else{
       $("#preloader").preloader('open');
