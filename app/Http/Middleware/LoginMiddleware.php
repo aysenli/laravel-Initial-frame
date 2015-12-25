@@ -47,7 +47,7 @@ class LoginMiddleware
                 return redirect()->guest('admin/common/login/index');
             }
         }
-        // var_dump( Route::currentRouteName() );
+        // var_dump(Route::currentRouteName());
         if (!Auth::user()->can(Route::currentRouteName())) {
             if ($request->ajax()) {
                 return response()->json(
