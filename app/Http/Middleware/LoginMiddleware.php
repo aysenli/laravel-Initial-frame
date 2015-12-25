@@ -1,10 +1,13 @@
 <?php namespace App\Http\Middleware;
+
 use Auth;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Route;
 use URL;
-class LoginMiddleware {
+
+class LoginMiddleware
+{
     /**
      * The Guard implementation.
      *
@@ -37,11 +40,10 @@ class LoginMiddleware {
                     [
                         'status' => 0,
                         'code' => 401,
-                        'message' => '没有权限操作'
+                        'message' => '没有权限操作',
                     ]
                 );
-            }
-            else {
+            } else {
                 return redirect()->guest('admin/common/login/index');
             }
         }
@@ -52,11 +54,10 @@ class LoginMiddleware {
                     [
                         'status' => 0,
                         'code' => 401,
-                        'message' => '没有权限操作'
+                        'message' => '没有权限操作',
                     ]
                 );
-            }
-            else {
+            } else {
                 return view('errors.401', compact('previousUrl'));
             }
         }
